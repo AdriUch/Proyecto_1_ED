@@ -1,3 +1,10 @@
+/*
+			Archivo: Clase BSTree
+			Hecha en clase
+
+			Descripción general: La clase del árbol BST.
+*/
+
 #pragma once
 
 #include <stdexcept>

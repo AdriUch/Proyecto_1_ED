@@ -1,3 +1,14 @@
+/*
+			Archivo: Clase UnsortedArrayDictionary
+			Hecha en clase
+
+			Descripción general: La clase del diccionario del UnsortedArray.
+
+			Modificación hecha por: Carmen Hidalgo Paz
+
+			Descripción: Se agrega un método clear.
+*/
+
 #pragma once
 
 #include <stdexcept>
@@ -46,6 +57,9 @@ public:
 		KVPair<K, V> p(key, value);
 		pairs->append(p);
 	}
+	void clear() {
+		pairs->clear();
+	}
 	V remove(K key) {
 		checkExisting(key);
 		KVPair<K, V> p = pairs->remove();
@@ -59,7 +73,7 @@ public:
 	void setValue(K key, V value) {
 		checkExisting(key);
 		KVPair<K, V> p(key, value);
-		pairs->set(p);
+		pairs->setElement(p);
 	}
 	bool contains(K key) {
 		KVPair<K, V> p(key);

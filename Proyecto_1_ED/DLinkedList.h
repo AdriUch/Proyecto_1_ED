@@ -1,3 +1,11 @@
+/*
+			Archivo: Clase DLinkedList
+			Hecha en clase
+
+			Descripción general: La clase de lista doblemente enlazada.
+			Hereda de la clase List.
+*/
+
 #pragma once
 
 #include <stdexcept>
@@ -38,7 +46,7 @@ public:
 			new DNode<E>(element, tail, tail->previous);
 		size++;
 	}
-	void set(E element) {
+	void setElement(E element) {
 		if (size == 0)
 			throw runtime_error("List is empty.");
 		if (current->next == tail)
@@ -140,6 +148,9 @@ public:
 			next();
 		}
 		return false;
+	}
+	bool isEmpty() {
+		return size == 0;
 	}
 };
 

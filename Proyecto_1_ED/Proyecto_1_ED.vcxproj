@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>4194304</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,8 +143,12 @@
     <ClInclude Include="KVPair.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="SNode.h" />
+    <ClInclude Include="SplayDictionary.h" />
     <ClInclude Include="SplayTree.h" />
     <ClInclude Include="UnsortedArrayDictionary.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AVLDictionary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

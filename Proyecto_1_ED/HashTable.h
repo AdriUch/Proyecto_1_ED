@@ -1,3 +1,11 @@
+/*
+            Archivo: Clase HashTable
+            Hecha en clase
+
+            Descripción general: La clase del Hash Table. Hereda
+            de la clase Dictionary.
+*/
+
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
@@ -166,7 +174,7 @@ public:
     void setValue(K key, V value) {
         checkExisting(key);
         KVPair<K, V> p(key, value);
-        buckets[h(key)].set(p);
+        buckets[h(key)].setElement(p);
     }
     bool contains(K key) {
         KVPair<K, V> p(key);

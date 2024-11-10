@@ -1,2 +1,4 @@
 ﻿  Proyecto_1_ED.cpp
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(144,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\HashTable.h(127,32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
   Proyecto_1_ED.vcxproj -> C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\x64\Debug\Proyecto_1_ED.exe

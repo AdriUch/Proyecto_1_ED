@@ -1,3 +1,11 @@
+/*
+			Archivo: Clase DNode
+			Hecha en clase
+
+			Descripción general: La clase del nodo de la lista doblemente
+			enlazada.
+*/
+
 #pragma once
 
 template <typename E>

@@ -1,3 +1,10 @@
+/*
+            Archivo: Clase SNode
+            Hecha en clase
+
+            Descripción general: La clase del nodo del árbol Splay.
+*/
+
 #ifndef SNODE_H
 #define SNODE_H
 

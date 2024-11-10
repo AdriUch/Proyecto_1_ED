@@ -1,3 +1,15 @@
+/*
+            Archivo: Clase SplayDicitonary
+            Hecho por: Adrián Ugalde Chaves
+
+            Descripción general:
+
+            Modificación hecha por: Carmen Hidalgo Paz
+
+            Descripción: Se agrega un método clear.
+
+*/
+
 #pragma once
 
 #include <stdexcept>
@@ -25,6 +37,10 @@ public:
     void insert(K key, V value) {
         KVPair<K, V> p(key, value);
         pairs->insert(p);
+    }
+
+    void clear() {
+        pairs->clear();
     }
 
     V remove(K key) {
@@ -56,7 +72,7 @@ public:
         List<KVPair<K, V>>* items = pairs->getElements();
         List<K>* keys = new DLinkedList<K>();
         while (!items->atEnd()) {
-            auto p = items->getElement();
+            KVPair<K, V> p = items->getElement();
             keys->append(p.key);
             items->next();
         }
@@ -68,7 +84,7 @@ public:
         List<KVPair<K, V>>* items = pairs->getElements();
         List<V>* values = new DLinkedList<V>();
         while (!items->atEnd()) {
-            auto p = items->getElement();
+            KVPair<K, V> p = items->getElement();
             values->append(p.value);
             items->next();
         }

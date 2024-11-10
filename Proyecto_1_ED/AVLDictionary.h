@@ -1,3 +1,15 @@
+/*
+			Archivo: Clase AVLDicitonary
+			Hecho por: Britany Romero Hernández
+
+			Descripción general:
+
+			Modificación hecha por: Carmen Hidalgo Paz
+
+			Descripción: Se agrega un método clear.
+
+*/
+
 #pragma once
 
 #include <stdexcept>
@@ -25,6 +37,10 @@ public:
 	void insert(K key, V value) {
 		KVPair<K, V> p(key, value);
 		pairs->insert(p);
+	}
+
+	void clear() {
+		pairs->clear();
 	}
 
 	V remove(K key) {

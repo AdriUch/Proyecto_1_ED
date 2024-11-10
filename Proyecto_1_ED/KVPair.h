@@ -1,3 +1,13 @@
+/*
+			Archivo: Clase KVPair
+			Hecha en clase
+
+			Descripción general: Una clase que contiene los atributos necesarios
+			para poder crear un objeto llamado KVPair que después se guardará
+			en un diccionario. Se detalla el funcionamiento de la asignación
+			las comparaciones entre objetos y la impresión.
+*/
+
 #pragma once
 #include <iostream>
 

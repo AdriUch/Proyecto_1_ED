@@ -62,5 +62,13 @@
     <ClInclude Include="UnsortedArrayDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SplayDictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AVLDictionary.h">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

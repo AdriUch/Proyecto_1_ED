@@ -1,3 +1,10 @@
+/*
+            Archivo: Clase SplayTree
+            Hecha en clase
+
+            Descripción general: La clase del árbol Splay.
+*/
+
 #ifndef SPLAYTREE_H
 #define SPLAYTREE_H
 
@@ -187,7 +194,7 @@ private:
             temp->parent->left = temp;
     }
     void splay() {
-        if (last == nullptr)
+        if (last == nullptr || root == nullptr)
             return;
         SNode<E> *current = last;
         while (last != root) {

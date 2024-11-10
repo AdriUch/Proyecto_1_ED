@@ -1,3 +1,10 @@
+/*
+			Archivo: Clase BSTNode
+			Hecha en clase
+
+			Descripción general: La clase del nodo del BSTree.
+*/
+
 #pragma once
 
 template <typename E>

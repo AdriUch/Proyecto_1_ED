@@ -1,3 +1,10 @@
+/*
+			Archivo: Clase AVLTree
+			Hecha en clase
+
+			Descripción general: La clase del árbol AVL.
+*/
+
 #pragma once
 #include <stdexcept>
 #include <iostream>
