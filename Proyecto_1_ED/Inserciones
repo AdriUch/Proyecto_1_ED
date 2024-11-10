@@ -1,9 +1,12 @@
-// Creado por Britany 
-//En estas pruebas los diccionarios inician vacíos y se llenan con 10000 elementos. Las llaves se insertan
-//de las siguientes formas:
-//a. Llaves en orden aleatorio
-//b. Llaves en orden ascendente
-//c. Grupos de llaves similares
+/*
+Creado por Britany 
+En estas pruebas los diccionarios inician vacíos y se llenan con 10000 elementos. Las llaves se insertan
+de las siguientes formas:
+a. Llaves en orden aleatorio
+b. Llaves en orden ascendente
+c. Grupos de llaves similares
+*
+
 #pragma once
 #include <iostream>
 #include <vector>
