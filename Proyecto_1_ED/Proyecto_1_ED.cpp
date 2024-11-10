@@ -1,16 +1,18 @@
 /*
-            Trabajo: Proyecto 1 - An醠isis de Implementaciones de Diccionarios
-            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern醤dez y Adri醤 Ugalde Chaves
+            Trabajo: Proyecto 1 - An谩lisis de Implementaciones de Diccionarios
+            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern谩ndez y Adri谩n Ugalde Chaves
             Fecha de Entrega: 14 de noviembre del 2024
             Clase: Estructuras de Datos
 
-            Descripci髇 General: En esta secci髇 se manejan los m閠odos
-            de inserci髇, borrado y b鷖queda para todos los diccionarios.
-            Adem醩 se tiene el m閠odo para tomar el tiempo de cada acci髇
-            mencionada anteriormente. Asimismo, se tienen m閠odos para insertar elementos
+            Descripci贸n General: En esta secci贸n se manejan los m茅todos
+            de inserci贸n, borrado y b煤squeda para todos los diccionarios.
+            Adem谩s se tiene el m茅todo para tomar el tiempo de cada acci贸n
+            mencionada anteriormente. Asimismo, se tienen m茅todos para insertar elementos
             de manera aleatoria, ascendente y con llaves similares. Cada vez
-            que se realiza un m閠odo para cada diccionario los valores se guardan
+            que se realiza un m茅todo para cada diccionario los valores se guardan
             en un archivo .csv.
+
+            Editado por Britany para las pruebas de inserci贸n
 
 */
 
@@ -56,14 +58,14 @@ void insertRandomValues(Dictionary<int, int>* numeros) {
         int r = rand() % 10500;
         if (!numeros->contains(r)) {
             numeros->insert(r, r);
-            numLista = numLista + 1;
+            numLista++;
         }
     }
 }
 
 void insertAscendingValues(Dictionary<int, int>* numeros) {
     for (int i = 0; i < 10000; i++) {
-        numeros->insert(i+1, i+1);
+        numeros->insert(i + 1, i + 1);
     }
 }
 
@@ -78,10 +80,61 @@ void insertSimilarValues(Dictionary<int, int>* numeros) {
             }
             if (!numeros->contains(r)) {
                 numeros->insert(r, r);
-                spacesLeft = spacesLeft + 1;
+                spacesLeft++;
             }
-            r = r + 1;
+            r++;
         }
+    }
+}
+
+void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
+    const int repeticiones = 10000;
+    double tiempoAleatorio[repeticiones];
+    double tiempoAscendente[repeticiones];
+    double tiempoSimilares[repeticiones];
+
+    // Medir tiempo de inserci贸n aleatoria
+    LARGE_INTEGER frequency, start, end;
+    QueryPerformanceFrequency(&frequency);
+
+    numeros->clear();
+    QueryPerformanceCounter(&start);
+    insertRandomValues(numeros);
+    QueryPerformanceCounter(&end);
+    double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+
+    cout << "Insercion aleatoria completada." << endl;
+
+    // Medir tiempo de inserci贸n ascendente
+    numeros->clear();
+    QueryPerformanceCounter(&start);
+    insertAscendingValues(numeros);
+    QueryPerformanceCounter(&end);
+    double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+
+    cout << "Inserci贸n ascendente completada." << endl;
+
+    // Medir tiempo de inserci贸n en grupos similares
+    numeros->clear();
+    QueryPerformanceCounter(&start);
+    insertSimilarValues(numeros);
+    QueryPerformanceCounter(&end);
+    double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+
+    cout << "Insercion en grupos similares completada." << endl;
+
+    // Escribir resultados en archivo CSV
+    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
+    if (file.is_open()) {
+        file << "Tipo de Insercion,Tiempo (milisegundos)\n";
+        file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
+        file << "Ascendente," << tiempoInsercionAscendente << "\n";
+        file << "Similares," << tiempoInsercionSimilares << "\n";
+
+        file.close();
+        cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
+    } else {
+        std::cerr << "Error para abrir el archivo" << endl;
     }
 }
 
@@ -140,6 +193,10 @@ int main() {
     Dictionary<int, int>* numerosBST = new BSTDictionary<int, int>();
     Dictionary<int, int>* numerosAVL = new AVLDictionary<int, int>();
     Dictionary<int, int>* numerosSplay = new SplayDictionary<int, int>();
+
+
+
+
     
     srand(time(0));
     cout << endl<< "1. unsorted" << endl;
@@ -152,6 +209,23 @@ int main() {
     tiempoBusquedas(numerosAVL, "AVL");
     cout << endl << "5. splay" << endl;
     tiempoBusquedas(numerosSplay, "Splay");
+
+    // Pruebas de inserciones
+    cout << "1. Inserciones en UnsortedArrayDictionary" << endl;
+    tiempoInserciones(numerosUnsorted, "Unsorted");
+
+    cout << "2. Inserciones en HashTable" << endl;
+    tiempoInserciones(numerosHash, "Hash");
+
+    cout << "3. Inserciones en BSTDictionary" << endl;
+    tiempoInserciones(numerosBST, "BST");
+
+    cout << "4. Inserciones en AVLDictionary" << endl;
+    tiempoInserciones(numerosAVL, "AVL");
+
+    cout << "5. Inserciones en SplayDictionary" << endl;
+    tiempoInserciones(numerosSplay, "Splay");
+
 
     delete numerosUnsorted;
     delete numerosHash;
