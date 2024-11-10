@@ -5,7 +5,7 @@ de las siguientes formas:
 a. Llaves en orden aleatorio
 b. Llaves en orden ascendente
 c. Grupos de llaves similares
-*
+/*
 
 #pragma once
 #include <iostream>
