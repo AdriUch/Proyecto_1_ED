@@ -1,18 +1,16 @@
 /*
-            Trabajo: Proyecto 1 - An谩lisis de Implementaciones de Diccionarios
-            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern谩ndez y Adri谩n Ugalde Chaves
+            Trabajo: Proyecto 1 - An醠isis de Implementaciones de Diccionarios
+            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern醤dez y Adri醤 Ugalde Chaves
             Fecha de Entrega: 14 de noviembre del 2024
             Clase: Estructuras de Datos
 
-            Descripci贸n General: En esta secci贸n se manejan los m茅todos
-            de inserci贸n, borrado y b煤squeda para todos los diccionarios.
-            Adem谩s se tiene el m茅todo para tomar el tiempo de cada acci贸n
-            mencionada anteriormente. Asimismo, se tienen m茅todos para insertar elementos
+            Descripci髇 General: En esta secci髇 se manejan los m閠odos
+            de inserci髇, borrado y b鷖queda para todos los diccionarios.
+            Adem醩 se tiene el m閠odo para tomar el tiempo de cada acci髇
+            mencionada anteriormente. Asimismo, se tienen m閠odos para insertar elementos
             de manera aleatoria, ascendente y con llaves similares. Cada vez
-            que se realiza un m茅todo para cada diccionario los valores se guardan
+            que se realiza un m閠odo para cada diccionario los valores se guardan
             en un archivo .csv.
-
-            Editado por Britany para las pruebas de inserci贸n
 
 */
 
@@ -21,6 +19,7 @@
 #include <fstream>
 #include <vector>
 #include <time.h>
+#include <random>
 #include "UnsortedArrayDictionary.h"
 #include "HashTable.h"
 #include "BSTDictionary.h"
@@ -52,20 +51,38 @@ double measureTimeBusqueda(Dictionary<int, int>* numeros) {
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
 
+double measureTimeBorrado(Dictionary<int, int>* numeros, int key) {
+    LARGE_INTEGER frequency, start, end;
+    QueryPerformanceFrequency(&frequency);
+
+    try {
+        QueryPerformanceCounter(&start);
+        numeros->remove(key);  // Intento de borrado
+        QueryPerformanceCounter(&end);
+    }
+    catch (const std::runtime_error& e) {
+        // Si ocurre una excepci髇, simplemente ignoramos este caso
+        QueryPerformanceCounter(&end);  // Termina el tiempo de medici髇
+        return 0.0;  // Tiempo de borrado omitido debido a la excepci髇
+    }
+
+    return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+}
+
 void insertRandomValues(Dictionary<int, int>* numeros) {
     int numLista = 0;
     while (numLista < 10000) {
         int r = rand() % 10500;
         if (!numeros->contains(r)) {
             numeros->insert(r, r);
-            numLista++;
+            numLista = numLista + 1;
         }
     }
 }
 
 void insertAscendingValues(Dictionary<int, int>* numeros) {
     for (int i = 0; i < 10000; i++) {
-        numeros->insert(i + 1, i + 1);
+        numeros->insert(i+1, i+1);
     }
 }
 
@@ -80,61 +97,10 @@ void insertSimilarValues(Dictionary<int, int>* numeros) {
             }
             if (!numeros->contains(r)) {
                 numeros->insert(r, r);
-                spacesLeft++;
+                spacesLeft = spacesLeft + 1;
             }
-            r++;
+            r = r + 1;
         }
-    }
-}
-
-void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int repeticiones = 10000;
-    double tiempoAleatorio[repeticiones];
-    double tiempoAscendente[repeticiones];
-    double tiempoSimilares[repeticiones];
-
-    // Medir tiempo de inserci贸n aleatoria
-    LARGE_INTEGER frequency, start, end;
-    QueryPerformanceFrequency(&frequency);
-
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertRandomValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-
-    cout << "Insercion aleatoria completada." << endl;
-
-    // Medir tiempo de inserci贸n ascendente
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertAscendingValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-
-    cout << "Inserci贸n ascendente completada." << endl;
-
-    // Medir tiempo de inserci贸n en grupos similares
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertSimilarValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-
-    cout << "Insercion en grupos similares completada." << endl;
-
-    // Escribir resultados en archivo CSV
-    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
-    if (file.is_open()) {
-        file << "Tipo de Insercion,Tiempo (milisegundos)\n";
-        file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
-        file << "Ascendente," << tiempoInsercionAscendente << "\n";
-        file << "Similares," << tiempoInsercionSimilares << "\n";
-
-        file.close();
-        cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
-    } else {
-        std::cerr << "Error para abrir el archivo" << endl;
     }
 }
 
@@ -186,6 +152,68 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     }
 }
 
+void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
+    const int repeticiones = 10000;
+    double tiempoAleatorio[repeticiones];
+    double tiempoAscendente[repeticiones];
+    double tiempoSimilares[repeticiones];
+
+    // Borrado en orden aleatorio
+    numeros->clear();
+    insertRandomValues(numeros);
+    List<int>* llaves = numeros->getKeys();
+    llaves->goToStart();
+
+    // Guardar llaves y mezclar para obtener orden aleatorio
+    std::vector<int> keyVector;
+    while (!llaves->atEnd()) {
+        keyVector.push_back(llaves->getElement());
+        llaves->next();
+    }
+    std::shuffle(keyVector.begin(), keyVector.end(), std::random_device());
+    for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
+        tiempoAleatorio[i] = measureTimeBorrado(numeros, keyVector[i]);
+    }
+    cout << endl << "Prueba 1 de borrado aleatorio terminada" << endl;
+
+    // Borrado en orden ascendente
+    numeros->clear();
+    insertRandomValues(numeros);
+    std::sort(keyVector.begin(), keyVector.end()); // Orden ascendente
+    for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
+        tiempoAscendente[i] = measureTimeBorrado(numeros, keyVector[i]);
+    }
+    cout << endl << "Prueba 2 de borrado ascendente terminada" << endl;
+
+    // Borrado en grupos de llaves similares
+    numeros->clear();
+    insertSimilarValues(numeros);
+    // Agrupar llaves similares para simular "grupos"
+    for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
+        tiempoSimilares[i] = measureTimeBorrado(numeros, keyVector[i]);
+    }
+    cout << endl << "Prueba 3 de borrado en grupos de llaves similares terminada" << endl;
+
+    delete llaves;
+
+    // Guardar resultados en un archivo CSV
+    std::ofstream file(nomDictionary + "_tiempo_Borrado.csv");
+    if (file.is_open()) {
+        file << "Iteracion,Orden Aleatorio (ms),Orden Ascendente (ms),Llaves Similares (ms)\n";
+        for (int i = 0; i < repeticiones; ++i) {
+            file << (i + 1) << ","
+                << tiempoAleatorio[i] << ","
+                << tiempoAscendente[i] << ","
+                << tiempoSimilares[i] << "\n";
+        }
+        file.close();
+        cout << endl << "Tiempos de borrado guardados en el archivo " + nomDictionary + "_tiempo_Borrado.csv" << endl;
+    }
+    else {
+        std::cerr << "Error al abrir el archivo para guardar tiempos de borrado" << endl;
+    }
+}
+
 int main() {
 
     Dictionary<int, int>* numerosUnsorted = new UnsortedArrayDictionary<int, int>();
@@ -193,10 +221,6 @@ int main() {
     Dictionary<int, int>* numerosBST = new BSTDictionary<int, int>();
     Dictionary<int, int>* numerosAVL = new AVLDictionary<int, int>();
     Dictionary<int, int>* numerosSplay = new SplayDictionary<int, int>();
-
-
-
-
     
     srand(time(0));
     cout << endl<< "1. unsorted" << endl;
@@ -210,22 +234,18 @@ int main() {
     cout << endl << "5. splay" << endl;
     tiempoBusquedas(numerosSplay, "Splay");
 
-    // Pruebas de inserciones
-    cout << "1. Inserciones en UnsortedArrayDictionary" << endl;
-    tiempoInserciones(numerosUnsorted, "Unsorted");
+    cout << endl << "Pruebas de Borrado para cada Diccionario" << endl;
 
-    cout << "2. Inserciones en HashTable" << endl;
-    tiempoInserciones(numerosHash, "Hash");
-
-    cout << "3. Inserciones en BSTDictionary" << endl;
-    tiempoInserciones(numerosBST, "BST");
-
-    cout << "4. Inserciones en AVLDictionary" << endl;
-    tiempoInserciones(numerosAVL, "AVL");
-
-    cout << "5. Inserciones en SplayDictionary" << endl;
-    tiempoInserciones(numerosSplay, "Splay");
-
+    cout << endl << "1. unsorted" << endl;
+    tiempoBorrados(numerosUnsorted, "Unsorted");
+    cout << endl << "2. hash" << endl;
+    tiempoBorrados(numerosHash, "Hash");
+    cout << endl << "3. bst" << endl;
+    tiempoBorrados(numerosBST, "BST");
+    cout << endl << "4. avl" << endl;
+    tiempoBorrados(numerosAVL, "AVL");
+    cout << endl << "5. splay" << endl;
+    tiempoBorrados(numerosSplay, "Splay");
 
     delete numerosUnsorted;
     delete numerosHash;
