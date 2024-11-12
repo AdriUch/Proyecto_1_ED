@@ -68,7 +68,7 @@ double measureTimeBorrado(Dictionary<int, int>* numeros, int key) {
 
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
-
+//Llaves en orden aleatorio
 void insertRandomValues(Dictionary<int, int>* numeros) {
     int numLista = 0;
     while (numLista < 10000) {
@@ -79,13 +79,13 @@ void insertRandomValues(Dictionary<int, int>* numeros) {
         }
     }
 }
-
+//Llaves en orden ascendente
 void insertAscendingValues(Dictionary<int, int>* numeros) {
     for (int i = 0; i < 10000; i++) {
         numeros->insert(i+1, i+1);
     }
 }
-
+//Grupos de llaves similares
 void insertSimilarValues(Dictionary<int, int>* numeros) {
     int spacesLeft = 0;
     while (spacesLeft < 10000) {
