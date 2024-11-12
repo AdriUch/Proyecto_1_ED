@@ -194,7 +194,7 @@ private:
             temp->parent->left = temp;
     }
     void splay() {
-        if (last == nullptr || root == nullptr)
+        if (last == nullptr)
             return;
         SNode<E> *current = last;
         while (last != root) {
@@ -287,7 +287,7 @@ public:
     }
     void clear() {
         clearAux(root);
-        root = nullptr;
+        last = root = nullptr;
     }
     List<E> *getElements() {
         List<E> *elements = new DLinkedList<E>();

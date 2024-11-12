@@ -1,4 +1,8 @@
 ﻿  Proyecto_1_ED.cpp
-C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(144,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(64,38): warning C4101: 'e': unreferenced local variable
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(111,12): warning C4101: 'tiempoSimilares': unreferenced local variable
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(109,12): warning C4101: 'tiempoAleatorio': unreferenced local variable
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(110,12): warning C4101: 'tiempoAscendente': unreferenced local variable
+C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED.cpp(282,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\HashTable.h(127,32): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
   Proyecto_1_ED.vcxproj -> C:\Users\hidal\OneDrive\Documents\Github\Proyecto_1_ED\Proyecto_1_ED\Proyecto_1_ED\x64\Debug\Proyecto_1_ED.exe
