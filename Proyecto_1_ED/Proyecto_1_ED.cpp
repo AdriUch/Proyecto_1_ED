@@ -1,15 +1,15 @@
 /*
-            Trabajo: Proyecto 1 - An谩lisis de Implementaciones de Diccionarios
-            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern谩ndez y Adri谩n Ugalde Chaves
+            Trabajo: Proyecto 1 - An醠isis de Implementaciones de Diccionarios
+            Hecho por: Carmen Hidalgo Paz, Britany Romero Hern醤dez y Adri醤 Ugalde Chaves
             Fecha de Entrega: 14 de noviembre del 2024
             Clase: Estructuras de Datos
 
-            Descripci贸n General: En esta secci贸n se manejan los m茅todos
-            de inserci贸n, borrado y b煤squeda para todos los diccionarios.
-            Adem谩s se tiene el m茅todo para tomar el tiempo de cada acci贸n
-            mencionada anteriormente. Asimismo, se tienen m茅todos para insertar elementos
+            Descripci髇 General: En esta secci髇 se manejan los m閠odos
+            de inserci髇, borrado y b鷖queda para todos los diccionarios.
+            Adem醩 se tiene el m閠odo para tomar el tiempo de cada acci髇
+            mencionada anteriormente. Asimismo, se tienen m閠odos para insertar elementos
             de manera aleatoria, ascendente y con llaves similares. Cada vez
-            que se realiza un m茅todo para cada diccionario los valores se guardan
+            que se realiza un m閠odo para cada diccionario los valores se guardan
             en un archivo .csv.
 
 */
@@ -25,6 +25,7 @@
 #include "BSTDictionary.h"
 #include "AVLDictionary.h"
 #include "SplayDictionary.h"
+#include "Inserciones.h"
 
 using std::runtime_error;
 using std::cout;
@@ -61,14 +62,14 @@ double measureTimeBorrado(Dictionary<int, int>* numeros, int key) {
         QueryPerformanceCounter(&end);
     }
     catch (const std::runtime_error& e) {
-        // Si ocurre una excepci贸n, simplemente ignoramos este caso
-        QueryPerformanceCounter(&end);  // Termina el tiempo de medici贸n
-        return 0.0;  // Tiempo de borrado omitido debido a la excepci贸n
+        // Si ocurre una excepci髇, simplemente ignoramos este caso
+        QueryPerformanceCounter(&end);  // Termina el tiempo de medici髇
+        return 0.0;  // Tiempo de borrado omitido debido a la excepci髇
     }
 
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
-//Llaves en orden aleatorio
+
 void insertRandomValues(Dictionary<int, int>* numeros) {
     int numLista = 0;
     while (numLista < 10000) {
@@ -79,13 +80,13 @@ void insertRandomValues(Dictionary<int, int>* numeros) {
         }
     }
 }
-//Llaves en orden ascendente
+
 void insertAscendingValues(Dictionary<int, int>* numeros) {
     for (int i = 0; i < 10000; i++) {
         numeros->insert(i+1, i+1);
     }
 }
-//Grupos de llaves similares
+
 void insertSimilarValues(Dictionary<int, int>* numeros) {
     int spacesLeft = 0;
     while (spacesLeft < 10000) {
@@ -105,7 +106,7 @@ void insertSimilarValues(Dictionary<int, int>* numeros) {
 }
 
 void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int repeticiones = 10000;
+    const int repeticiones = 1;
     // Guardar tiempos
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
@@ -153,7 +154,7 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
 }
 
 void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
-    const int repeticiones = 10000;
+    const int repeticiones = 1;
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
     double tiempoSimilares[repeticiones];
@@ -214,6 +215,7 @@ void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
     }
 }
 
+
 int main() {
 
     Dictionary<int, int>* numerosUnsorted = new UnsortedArrayDictionary<int, int>();
@@ -222,6 +224,19 @@ int main() {
     Dictionary<int, int>* numerosAVL = new AVLDictionary<int, int>();
     Dictionary<int, int>* numerosSplay = new SplayDictionary<int, int>();
     
+    vector<Dictionary<int, int>*> diccionarios = { numerosUnsorted, numerosHash, numerosBST, numerosAVL, numerosSplay };
+
+    // Crear instancia de Inserciones con tama駉 de prueba de 1000 (ajustable)
+    int sizePrueba = 1;
+    Inserciones pruebasInserciones(diccionarios, sizePrueba);
+
+    // Realizar pruebas de inserciones
+    cout << "=== Pruebas de Inserciones ===" << endl;
+    pruebasInserciones.insercionAleatoria();
+    pruebasInserciones.insercionAscendente();
+    pruebasInserciones.insertSimilarValues(numerosAVL);
+    cout << "=== Fin de Pruebas de Inserciones ===" << endl;
+
     srand(time(0));
     cout << endl<< "1. unsorted" << endl;
     tiempoBusquedas(numerosUnsorted, "Unsorted");
