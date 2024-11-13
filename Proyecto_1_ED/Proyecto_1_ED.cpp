@@ -130,55 +130,52 @@ double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
 // - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
 // - - - INSERCIONES
 void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int repeticiones = 1;
-    double tiempoAleatorio[repeticiones];
-    double tiempoAscendente[repeticiones];
-    double tiempoSimilares[repeticiones];
+    const int numElementos = 10000;
+    double tiempoAleatorio[numElementos];
+    double tiempoAscendente[numElementos];
+    double tiempoSimilares[numElementos];
 
-    // Medir tiempo de inserción aleatoria
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
+    // - - - Inserción aleatoria - - -
     numeros->clear();
     QueryPerformanceCounter(&start);
     insertRandomValues(numeros);
     QueryPerformanceCounter(&end);
     double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+    cout << "Inserción aleatoria completada en " << tiempoInsercionAleatoria << " ms." << endl;
 
-    cout << "Inserción aleatoria completada." << endl;
-
-    // Medir tiempo de inserción ascendente
+    // - - - Inserción ascendente - - -
     numeros->clear();
     QueryPerformanceCounter(&start);
     insertAscendingValues(numeros);
     QueryPerformanceCounter(&end);
     double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+    cout << "Inserción ascendente completada en " << tiempoInsercionAscendente << " ms." << endl;
 
-    cout << "Inserción ascendente completada." << endl;
-
-    // Medir tiempo de inserción en grupos similares
+    // - - - Inserción de llaves similares - - -
     numeros->clear();
     QueryPerformanceCounter(&start);
     insertSimilarValues(numeros);
     QueryPerformanceCounter(&end);
     double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+    cout << "Inserción de llaves similares completada en " << tiempoInsercionSimilares << " ms." << endl;
 
-    cout << "Inserción en grupos similares completada." << endl;
-
-    // Escribir resultados en archivo CSV
+    // Guardar los tiempos en un archivo CSV
     std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
     if (file.is_open()) {
-        file << "Tipo de Inserción,Tiempo (milisegundos)\n";
+        file << "Tipo de Inserción,Tiempo (ms)\n";
         file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
         file << "Ascendente," << tiempoInsercionAscendente << "\n";
         file << "Similares," << tiempoInsercionSimilares << "\n";
-
         file.close();
         cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
     } else {
         std::cerr << "Error para abrir el archivo" << endl;
     }
 }
+
 // - - - - - FIN MEDICIONES DE TIEMPOS
 
 // - - - BÚSQUEDAS
