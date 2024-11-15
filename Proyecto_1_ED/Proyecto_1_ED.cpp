@@ -108,29 +108,49 @@ double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
+    int randomKey = rand() % 10500; // Generar una llave aleatoria
+
     try {
-        if (operacion == 0) {           // Inserción
+        QueryPerformanceCounter(&start);
 
+        if (operacion == 0) { // Inserción
+            if (!numeros->contains(randomKey)) {
+                numeros->insert(randomKey, randomKey);
+            }
         }
-        if (operacion == 1) {           // Búsqueda
+        else if (operacion == 1) { // Búsqueda
+            if (numeros->getSize()==0) {  // Verificar si el diccionario tiene elementos
+                numeros->contains(randomKey);
+            }
+            else {
+                return 0.0; // Saltar si no hay elementos
+            }
+        }
+        else if (operacion == 2) { // Borrado
+            if (numeros->getSize()==0) {  // Verificar si el diccionario tiene elementos
+                numeros->remove(randomKey);
+            }
+            else {
+                return 0.0; // Saltar si no hay elementos
+            }
+        }
 
-        }
-        if (operacion == 2) {           // Borrado
-        }
+        QueryPerformanceCounter(&end);
     }
     catch (const std::runtime_error& e) {
-        // Si ocurre una excepción, simplemente ignoramos este caso
-        QueryPerformanceCounter(&end);  // Termina el tiempo de medición
-        return 0.0;  // Tiempo de borrado omitido debido a la excepción
+        // Ignorar errores de borrado cuando la clave no existe
+        QueryPerformanceCounter(&end);
+        return 0.0;
     }
 
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
+
 // - - - INSERCIONES
 // - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
 // - - - INSERCIONES
 void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int numElementos = 10000;
+    const int numElementos = 1;
     double tiempoAleatorio[numElementos];
     double tiempoAscendente[numElementos];
     double tiempoSimilares[numElementos];
@@ -181,6 +201,8 @@ void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
 // - - - BÚSQUEDAS
 void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     const int repeticiones = 1;
+    List<int>* llaves = nullptr;
+    llaves = numeros->getKeys();
     // Guardar tiempos
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
@@ -189,7 +211,6 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     numeros->clear();
     // Aleatorio
     insertRandomValues(numeros);
-    List<int>* llaves = numeros->getKeys();
     llaves->goToStart();
     for (int i = 0; i < repeticiones; ++i) {
         llaves->goToPos(i);
@@ -208,7 +229,6 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     cout << endl << "Prueba 2 terminada" << endl;
     // Llaves Similares
     insertSimilarValues(numeros);
-    List<int>* llaves = numeros->getKeys();
     llaves->goToStart();
     for (int i = 0; i < repeticiones; ++i) {
         llaves->goToPos(i);
