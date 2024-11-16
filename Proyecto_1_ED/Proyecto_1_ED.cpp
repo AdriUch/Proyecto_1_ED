@@ -149,58 +149,58 @@ double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
 // - - - INSERCIONES
 // - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
 // - - - INSERCIONES
-void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int numElementos = 1;
-    double tiempoAleatorio[numElementos];
-    double tiempoAscendente[numElementos];
-    double tiempoSimilares[numElementos];
-
-    LARGE_INTEGER frequency, start, end;
-    QueryPerformanceFrequency(&frequency);
-
-    // - - - Inserción aleatoria - - -
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertRandomValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-    cout << "Inserción aleatoria completada en " << tiempoInsercionAleatoria << " ms." << endl;
-
-    // - - - Inserción ascendente - - -
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertAscendingValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-    cout << "Inserción ascendente completada en " << tiempoInsercionAscendente << " ms." << endl;
-
-    // - - - Inserción de llaves similares - - -
-    numeros->clear();
-    QueryPerformanceCounter(&start);
-    insertSimilarValues(numeros);
-    QueryPerformanceCounter(&end);
-    double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-    cout << "Inserción de llaves similares completada en " << tiempoInsercionSimilares << " ms." << endl;
-
-    // Guardar los tiempos en un archivo CSV
-    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
-    if (file.is_open()) {
-        file << "Tipo de Inserción,Tiempo (ms)\n";
-        file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
-        file << "Ascendente," << tiempoInsercionAscendente << "\n";
-        file << "Similares," << tiempoInsercionSimilares << "\n";
-        file.close();
-        cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
-    } else {
-        std::cerr << "Error para abrir el archivo" << endl;
-    }
-}
+//void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
+//    const int numElementos = 10000;
+//    double tiempoAleatorio[numElementos];
+//    double tiempoAscendente[numElementos];
+//    double tiempoSimilares[numElementos];
+//
+//    LARGE_INTEGER frequency, start, end;
+//    QueryPerformanceFrequency(&frequency);
+//
+//    // - - - Inserción aleatoria - - -
+//    numeros->clear();
+//    QueryPerformanceCounter(&start);
+//    insertRandomValues(numeros);
+//    QueryPerformanceCounter(&end);
+//    double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+//    cout << "Inserción aleatoria completada en " << tiempoInsercionAleatoria << " ms." << endl;
+//
+//    // - - - Inserción ascendente - - -
+//    numeros->clear();
+//    QueryPerformanceCounter(&start);
+//    insertAscendingValues(numeros);
+//    QueryPerformanceCounter(&end);
+//    double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+//    cout << "Inserción ascendente completada en " << tiempoInsercionAscendente << " ms." << endl;
+//
+//    // - - - Inserción de llaves similares - - -
+//    numeros->clear();
+//    QueryPerformanceCounter(&start);
+//    insertSimilarValues(numeros);
+//    QueryPerformanceCounter(&end);
+//    double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+//    cout << "Inserción de llaves similares completada en " << tiempoInsercionSimilares << " ms." << endl;
+//
+//    // Guardar los tiempos en un archivo CSV
+//    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
+//    if (file.is_open()) {
+//        file << "Tipo de Inserción,Tiempo (ms)\n";
+//        file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
+//        file << "Ascendente," << tiempoInsercionAscendente << "\n";
+//        file << "Similares," << tiempoInsercionSimilares << "\n";
+//        file.close();
+//        cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
+//    } else {
+//        std::cerr << "Error para abrir el archivo" << endl;
+//    }
+//}
 
 // - - - - - FIN MEDICIONES DE TIEMPOS
 
 // - - - BÚSQUEDAS
 void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int repeticiones = 1;
+    const int repeticiones = 10000;
     List<int>* llaves = nullptr;
     llaves = numeros->getKeys();
     // Guardar tiempos
@@ -217,7 +217,6 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
         int element = llaves->getElement();
         tiempoAleatorio[i] = measureTimeBusqueda(numeros, element);
     }
-    delete llaves;
     numeros->clear();
     cout << endl << "Prueba 1 terminada" << endl;
     // Ascendente
@@ -235,6 +234,7 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
         int element = llaves->getElement();
         tiempoSimilares[i] = measureTimeBusqueda(numeros, element);
     }
+    delete llaves;
     numeros->clear();
     cout << endl << "Prueba 3 terminada" << endl;
 
@@ -260,7 +260,7 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
 }
 // - - - BORRADOS
 void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
-    const int repeticiones = 1;
+    const int repeticiones = 10000;
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
     double tiempoSimilares[repeticiones];
@@ -322,7 +322,7 @@ void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
 }
 // - - - OPERACIONES MEZCLADAS
 void tiempoMezcladas(Dictionary<int, int>* numeros, string nomDictionary) {
-    const int repeticiones = 1;
+    const int repeticiones = 10000;
     // Guardar tiempos
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
@@ -352,23 +352,20 @@ void tiempoMezcladas(Dictionary<int, int>* numeros, string nomDictionary) {
     cout << endl << "Prueba 3 terminada" << endl;
 
     // Se escribe en un .csv
-    std::ofstream file(nomDictionary + "_tiempo_Mixtas.csv");
+    std::ofstream file(nomDictionary + "_tiempo_Mixta.csv");
     if (file.is_open()) {
-        // Nombre de cada columna
-        file << "Iteracion,Orden Ascendente (milisegundos),Orden Aleatorio (milisegundos),Llaves Similares (milisegundos)\n";
-
+        file << "Iteracion,Orden Aleatorio (ms),Orden Ascendente (ms),Llaves Similares (ms)\n";
         for (int i = 0; i < repeticiones; ++i) {
             file << (i + 1) << ","
                 << tiempoAleatorio[i] << ","
                 << tiempoAscendente[i] << ","
                 << tiempoSimilares[i] << "\n";
         }
-
         file.close();
-        cout << endl << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Busqueda.csv" << endl;
+        cout << endl << "Tiempos de borrado guardados en el archivo " + nomDictionary + "_tiempo_Mixta.csv" << endl;
     }
     else {
-        std::cerr << "Error para abrir el archivo" << endl;
+        std::cerr << "Error al abrir el archivo para guardar tiempos de mixtas" << endl;
     }
 }
 // - - - - - FINAL DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
@@ -382,18 +379,37 @@ int main() {
     Dictionary<int, int>* numerosSplay = new SplayDictionary<int, int>();
 
     srand(time(0));
-    // Pruebas de búsquedas
-    cout << endl << "Pruebas de Busqueda:" << endl;
+    // Pruebas de inserciones
+
+    //cout << endl << "Pruebas de Insercion:" << endl;
+    cout << endl << "1. unsorted" << endl;
+    //tiempoInserciones(numerosUnsorted, "Unsorted");
     cout << endl << "1. unsorted" << endl;
     tiempoBusquedas(numerosUnsorted, "Unsorted");
+
+    cout << endl << "2. hash" << endl;
+    //tiempoInserciones(numerosHash, "Hash");
     cout << endl << "2. hash" << endl;
     tiempoBusquedas(numerosHash, "Hash");
+
+    cout << endl << "3. bst" << endl;
+    //tiempoInserciones(numerosBST, "BST");
     cout << endl << "3. bst" << endl;
     tiempoBusquedas(numerosBST, "BST");
+
+    cout << endl << "4. avl" << endl;
+   // tiempoInserciones(numerosAVL, "AVL");
     cout << endl << "4. avl" << endl;
     tiempoBusquedas(numerosAVL, "AVL");
+
+    cout << endl << "5. splay" << endl;
+   // tiempoInserciones(numerosSplay, "Splay");
     cout << endl << "5. splay" << endl;
     tiempoBusquedas(numerosSplay, "Splay");
+
+    //Pruebas de búsquedas
+    //cout << endl << "Pruebas de Busqueda:" << endl;
+
 
     // Pruebas de borrados
     cout << endl << "Pruebas de Borrado:" << endl;
@@ -408,31 +424,20 @@ int main() {
     cout << endl << "5. splay" << endl;
     tiempoBorrados(numerosSplay, "Splay");
 
-    // Pruebas de inserciones
-    cout << endl << "Pruebas de Insercion:" << endl;
-    cout << endl << "1. unsorted" << endl;
-    tiempoInserciones(numerosUnsorted, "Unsorted");
-    cout << endl << "2. hash" << endl;
-    tiempoInserciones(numerosHash, "Hash");
-    cout << endl << "3. bst" << endl;
-    tiempoInserciones(numerosBST, "BST");
-    cout << endl << "4. avl" << endl;
-    tiempoInserciones(numerosAVL, "AVL");
-    cout << endl << "5. splay" << endl;
-    tiempoInserciones(numerosSplay, "Splay");
+  
 
-    //Pruebas operacionez mazcladas
+    //Pruebas operacionez mezcladas
     cout << endl << "Pruebas Mixtas:" << endl;
     cout << endl << "1. unsorted" << endl;
-    tiempoInserciones(numerosUnsorted, "Unsorted");
+    tiempoMezcladas(numerosUnsorted, "Unsorted");
     cout << endl << "2. hash" << endl;
-    tiempoInserciones(numerosHash, "Hash");
+    tiempoMezcladas(numerosHash, "Hash");
     cout << endl << "3. bst" << endl;
-    tiempoInserciones(numerosBST, "BST");
+    tiempoMezcladas(numerosBST, "BST");
     cout << endl << "4. avl" << endl;
-    tiempoInserciones(numerosAVL, "AVL");
+    tiempoMezcladas(numerosAVL, "AVL");
     cout << endl << "5. splay" << endl;
-    tiempoInserciones(numerosSplay, "Splay");
+    tiempoMezcladas(numerosSplay, "Splay");
 
     delete numerosUnsorted;
     delete numerosHash;
