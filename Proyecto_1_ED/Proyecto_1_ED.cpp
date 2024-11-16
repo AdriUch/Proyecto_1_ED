@@ -385,45 +385,45 @@ int main() {
    // //cout << endl << "Pruebas de Insercion:" << endl;
    // cout << endl << "1. unsorted" << endl;
    // //tiempoInserciones(numerosUnsorted, "Unsorted");
-   // cout << endl << "1. unsorted" << endl;
-   // tiempoBusquedas(numerosUnsorted, "Unsorted");
+   cout << endl << "1. unsorted" << endl;
+   tiempoBusquedas(numerosUnsorted, "Unsorted");
 
    // cout << endl << "2. hash" << endl;
    // //tiempoInserciones(numerosHash, "Hash");
-   // cout << endl << "2. hash" << endl;
-   // tiempoBusquedas(numerosHash, "Hash");
+   cout << endl << "2. hash" << endl;
+   tiempoBusquedas(numerosHash, "Hash");
 
    // cout << endl << "3. bst" << endl;
    // //tiempoInserciones(numerosBST, "BST");
-   // cout << endl << "3. bst" << endl;
-   // tiempoBusquedas(numerosBST, "BST");
+   cout << endl << "3. bst" << endl;
+   tiempoBusquedas(numerosBST, "BST");
 
    // cout << endl << "4. avl" << endl;
    //// tiempoInserciones(numerosAVL, "AVL");
-   // cout << endl << "4. avl" << endl;
-   // tiempoBusquedas(numerosAVL, "AVL");
+   cout << endl << "4. avl" << endl;
+   tiempoBusquedas(numerosAVL, "AVL");
 
    // cout << endl << "5. splay" << endl;
    //// tiempoInserciones(numerosSplay, "Splay");
-   // cout << endl << "5. splay" << endl;
-   // tiempoBusquedas(numerosSplay, "Splay");
+    cout << endl << "5. splay" << endl;
+    tiempoBusquedas(numerosSplay, "Splay");
 
     //Pruebas de búsquedas
     //cout << endl << "Pruebas de Busqueda:" << endl;
 
 
     // Pruebas de borrados
-    //cout << endl << "Pruebas de Borrado:" << endl;
-    //cout << endl << "1. unsorted" << endl;
-    //tiempoBorrados(numerosUnsorted, "Unsorted");
-    //cout << endl << "2. hash" << endl;
-    //tiempoBorrados(numerosHash, "Hash");
-    //cout << endl << "3. bst" << endl;
-    //tiempoBorrados(numerosBST, "BST");
-    //cout << endl << "4. avl" << endl;
-    //tiempoBorrados(numerosAVL, "AVL");
-    //cout << endl << "5. splay" << endl;
-    //tiempoBorrados(numerosSplay, "Splay");
+    cout << endl << "Pruebas de Borrado:" << endl;
+    cout << endl << "1. unsorted" << endl;
+    tiempoBorrados(numerosUnsorted, "Unsorted");
+    cout << endl << "2. hash" << endl;
+    tiempoBorrados(numerosHash, "Hash");
+    cout << endl << "3. bst" << endl;
+    tiempoBorrados(numerosBST, "BST");
+    cout << endl << "4. avl" << endl;
+    tiempoBorrados(numerosAVL, "AVL");
+    cout << endl << "5. splay" << endl;
+    tiempoBorrados(numerosSplay, "Splay");
 
   
 
