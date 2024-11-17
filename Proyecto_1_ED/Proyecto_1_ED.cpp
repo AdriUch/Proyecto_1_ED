@@ -449,7 +449,6 @@ int main() {
     cout << endl << "5. splay" << endl;
     tiempoBusquedas(numerosSplay, "Splay");
 
-
     // Pruebas de borrados
     cout << endl << "Pruebas de Borrado:" << endl;
     cout << endl << "1. unsorted" << endl;
@@ -462,8 +461,6 @@ int main() {
     tiempoBorrados(numerosAVL, "AVL");
     cout << endl << "5. splay" << endl;
     tiempoBorrados(numerosSplay, "Splay");
-
-  
 
     //Pruebas operacionez mezcladas
     cout << endl << "Pruebas Mixtas:" << endl;
