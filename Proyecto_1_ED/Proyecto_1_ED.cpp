@@ -73,9 +73,35 @@ void insertSimilarValues(Dictionary<int, int>* numeros) {
 // - - - - - INICIO MEDICIONES DE TIEMPOS - - - - -
 
 //Se mide el tiempo en milisegundos
+// - - - INSERCIÓN
+double measureTimeInsercion(Dictionary<int, int>* numeros, int opcion, int num) {
+    LARGE_INTEGER frequency, start, end;
+    QueryPerformanceFrequency(&frequency);
+
+    // Valor aleatorio
+    if (opcion == 0) {
+        QueryPerformanceCounter(&start);
+        numeros->insert(num, num);
+        QueryPerformanceCounter(&end);
+    }
+    // Valor ascendente
+    if (opcion == 1) {
+        int numActual = num + 1;
+        QueryPerformanceCounter(&start);
+        numeros->insert(numActual, numActual);
+        QueryPerformanceCounter(&end);
+    }
+    // Llave mezclada
+    if(opcion == 2) {
+        QueryPerformanceCounter(&start);
+        numeros->insert(num, num);
+        QueryPerformanceCounter(&end);
+    }
+
+    return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
+}
 // - - - BÚSQUEDA
 double measureTimeBusqueda(Dictionary<int, int>* numeros, int element) {
-
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
 
@@ -145,64 +171,78 @@ double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
 
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
-
-// - - - INSERCIONES
-// - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
-// - - - INSERCIONES
-//void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
-//    const int numElementos = 10000;
-//    double tiempoAleatorio[numElementos];
-//    double tiempoAscendente[numElementos];
-//    double tiempoSimilares[numElementos];
-//
-//    LARGE_INTEGER frequency, start, end;
-//    QueryPerformanceFrequency(&frequency);
-//
-//    // - - - Inserción aleatoria - - -
-//    numeros->clear();
-//    QueryPerformanceCounter(&start);
-//    insertRandomValues(numeros);
-//    QueryPerformanceCounter(&end);
-//    double tiempoInsercionAleatoria = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-//    cout << "Inserción aleatoria completada en " << tiempoInsercionAleatoria << " ms." << endl;
-//
-//    // - - - Inserción ascendente - - -
-//    numeros->clear();
-//    QueryPerformanceCounter(&start);
-//    insertAscendingValues(numeros);
-//    QueryPerformanceCounter(&end);
-//    double tiempoInsercionAscendente = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-//    cout << "Inserción ascendente completada en " << tiempoInsercionAscendente << " ms." << endl;
-//
-//    // - - - Inserción de llaves similares - - -
-//    numeros->clear();
-//    QueryPerformanceCounter(&start);
-//    insertSimilarValues(numeros);
-//    QueryPerformanceCounter(&end);
-//    double tiempoInsercionSimilares = static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
-//    cout << "Inserción de llaves similares completada en " << tiempoInsercionSimilares << " ms." << endl;
-//
-//    // Guardar los tiempos en un archivo CSV
-//    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
-//    if (file.is_open()) {
-//        file << "Tipo de Inserción,Tiempo (ms)\n";
-//        file << "Aleatoria," << tiempoInsercionAleatoria << "\n";
-//        file << "Ascendente," << tiempoInsercionAscendente << "\n";
-//        file << "Similares," << tiempoInsercionSimilares << "\n";
-//        file.close();
-//        cout << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
-//    } else {
-//        std::cerr << "Error para abrir el archivo" << endl;
-//    }
-//}
-
 // - - - - - FIN MEDICIONES DE TIEMPOS
 
+// - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
+// - - - INSERCIONES
+void tiempoInserciones(Dictionary<int, int>* numeros, string nomDictionary) {
+    const int repeticiones = 10000;
+    // Guardar tiempos
+    double tiempoAleatorio[repeticiones];
+    double tiempoAscendente[repeticiones];
+    double tiempoSimilares[repeticiones];
+
+    numeros->clear();
+    // Aleatorio
+    int iteracion = 0;
+    while (iteracion < repeticiones) {
+        int r = rand() % 10500;
+        if (!numeros->contains(r)) {
+            tiempoAleatorio[iteracion] = measureTimeInsercion(numeros, 0, r);
+            iteracion++;
+        }
+    }
+    numeros->clear();
+    cout << endl << "Prueba 1 terminada" << endl;
+    // Ascendente
+    for (int i = 0; i < repeticiones; ++i) {
+        tiempoAscendente[i] = measureTimeInsercion(numeros, 1, i);
+    }
+    numeros->clear();
+    cout << endl << "Prueba 2 terminada" << endl;
+    // Llaves Similares
+
+    int spacesLeft = 0;
+    while (spacesLeft < 10000) {
+        int amountElements = 10 + (rand() % 41);
+        int r = rand() % 10500;
+        for (int i = 0; i < amountElements; i++) {
+            if (spacesLeft >= 10000) {
+                break;
+            }
+            if (!numeros->contains(r)) {
+                tiempoSimilares[spacesLeft] = measureTimeInsercion(numeros, 2, r);
+                spacesLeft = spacesLeft + 1;
+            }
+            r = r + 1;
+        }
+    }
+    numeros->clear();
+    cout << endl << "Prueba 3 terminada" << endl;
+
+    // Se escribe en un .csv
+    std::ofstream file(nomDictionary + "_tiempo_Insercion.csv");
+    if (file.is_open()) {
+        // Nombre de cada columna
+        file << "Iteracion,Orden Ascendente (ms),Orden Aleatorio (ms),Llaves Similares (ms)\n";
+
+        for (int i = 0; i < repeticiones; ++i) {
+            file << (i + 1) << ","
+                << tiempoAleatorio[i] << ","
+                << tiempoAscendente[i] << ","
+                << tiempoSimilares[i] << "\n";
+        }
+
+        file.close();
+        cout << endl << "Tiempos guardados en el archivo " + nomDictionary + "_tiempo_Insercion.csv" << endl;
+    }
+    else {
+        std::cerr << "Error para abrir el archivo" << endl;
+    }
+}
 // - - - BÚSQUEDAS
 void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     const int repeticiones = 10000;
-    List<int>* llaves = nullptr;
-    llaves = numeros->getKeys();
     // Guardar tiempos
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
@@ -211,12 +251,14 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     numeros->clear();
     // Aleatorio
     insertRandomValues(numeros);
+    List<int>* llaves = numeros->getKeys();
     llaves->goToStart();
     for (int i = 0; i < repeticiones; ++i) {
         llaves->goToPos(i);
         int element = llaves->getElement();
         tiempoAleatorio[i] = measureTimeBusqueda(numeros, element);
     }
+    delete llaves;
     numeros->clear();
     cout << endl << "Prueba 1 terminada" << endl;
     // Ascendente
@@ -228,13 +270,14 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     cout << endl << "Prueba 2 terminada" << endl;
     // Llaves Similares
     insertSimilarValues(numeros);
-    llaves->goToStart();
+    List<int>* keys = numeros->getKeys();
+    keys->goToStart();
     for (int i = 0; i < repeticiones; ++i) {
-        llaves->goToPos(i);
-        int element = llaves->getElement();
-        tiempoSimilares[i] = measureTimeBusqueda(numeros, element);
+        keys->goToPos(i);
+        int elemento = keys->getElement();
+        tiempoSimilares[i] = measureTimeBusqueda(numeros, elemento);
     }
-    delete llaves;
+    delete keys;
     numeros->clear();
     cout << endl << "Prueba 3 terminada" << endl;
 
@@ -242,7 +285,7 @@ void tiempoBusquedas(Dictionary<int, int>* numeros, string nomDictionary) {
     std::ofstream file(nomDictionary + "_tiempo_Busqueda.csv");
     if (file.is_open()) {
         // Nombre de cada columna
-        file << "Iteracion,Orden Ascendente (milisegundos),Orden Aleatorio (milisegundos),Llaves Similares (milisegundos)\n";
+        file << "Iteracion,Orden Ascendente (ms),Orden Aleatorio (ms),Llaves Similares (ms)\n";
 
         for (int i = 0; i < repeticiones; ++i) {
             file << (i + 1) << ","
@@ -381,49 +424,44 @@ int main() {
 
     srand(time(0));
     // Pruebas de inserciones
-
-   // //cout << endl << "Pruebas de Insercion:" << endl;
-   // cout << endl << "1. unsorted" << endl;
-   // //tiempoInserciones(numerosUnsorted, "Unsorted");
-   // cout << endl << "1. unsorted" << endl;
-   // tiempoBusquedas(numerosUnsorted, "Unsorted");
-
-   // cout << endl << "2. hash" << endl;
-   // //tiempoInserciones(numerosHash, "Hash");
-   // cout << endl << "2. hash" << endl;
-   // tiempoBusquedas(numerosHash, "Hash");
-
-   // cout << endl << "3. bst" << endl;
-   // //tiempoInserciones(numerosBST, "BST");
-   // cout << endl << "3. bst" << endl;
-   // tiempoBusquedas(numerosBST, "BST");
-
-   // cout << endl << "4. avl" << endl;
-   //// tiempoInserciones(numerosAVL, "AVL");
-   // cout << endl << "4. avl" << endl;
-   // tiempoBusquedas(numerosAVL, "AVL");
-
-   // cout << endl << "5. splay" << endl;
-   //// tiempoInserciones(numerosSplay, "Splay");
-   // cout << endl << "5. splay" << endl;
-   // tiempoBusquedas(numerosSplay, "Splay");
+    cout << endl << "Pruebas de Insercion:" << endl;
+    cout << endl << "1. unsorted" << endl;
+    tiempoInserciones(numerosUnsorted, "Unsorted");
+    cout << endl << "2. hash" << endl;
+    tiempoInserciones(numerosHash, "Hash");
+    cout << endl << "3. bst" << endl;
+    tiempoInserciones(numerosBST, "BST");
+    cout << endl << "4. avl" << endl;
+    tiempoInserciones(numerosAVL, "AVL");
+    cout << endl << "5. splay" << endl;
+    tiempoInserciones(numerosSplay, "Splay");
 
     //Pruebas de búsquedas
-    //cout << endl << "Pruebas de Busqueda:" << endl;
+    cout << endl << "Pruebas de Busqueda:" << endl;
+    cout << endl << "1. unsorted" << endl;
+    tiempoBusquedas(numerosUnsorted, "Unsorted");
+    cout << endl << "2. hash" << endl;
+    tiempoBusquedas(numerosHash, "Hash");
+    cout << endl << "3. bst" << endl;
+    tiempoBusquedas(numerosBST, "BST");
+    cout << endl << "4. avl" << endl;
+    tiempoBusquedas(numerosAVL, "AVL");
+    cout << endl << "5. splay" << endl;
+    tiempoBusquedas(numerosSplay, "Splay");
 
 
     // Pruebas de borrados
-    //cout << endl << "Pruebas de Borrado:" << endl;
-    //cout << endl << "1. unsorted" << endl;
-    //tiempoBorrados(numerosUnsorted, "Unsorted");
-    //cout << endl << "2. hash" << endl;
-    //tiempoBorrados(numerosHash, "Hash");
-    //cout << endl << "3. bst" << endl;
-    //tiempoBorrados(numerosBST, "BST");
-    //cout << endl << "4. avl" << endl;
-    //tiempoBorrados(numerosAVL, "AVL");
-    //cout << endl << "5. splay" << endl;
-    //tiempoBorrados(numerosSplay, "Splay");
+    cout << endl << "Pruebas de Borrado:" << endl;
+    cout << endl << "1. unsorted" << endl;
+    tiempoBorrados(numerosUnsorted, "Unsorted");
+    cout << endl << "2. hash" << endl;
+    tiempoBorrados(numerosHash, "Hash");
+    cout << endl << "3. bst" << endl;
+    tiempoBorrados(numerosBST, "BST");
+    cout << endl << "4. avl" << endl;
+    tiempoBorrados(numerosAVL, "AVL");
+    cout << endl << "5. splay" << endl;
+    tiempoBorrados(numerosSplay, "Splay");
 
   
 
