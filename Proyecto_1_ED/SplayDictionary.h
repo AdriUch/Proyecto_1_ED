@@ -1,12 +1,12 @@
 /*
             Archivo: Clase SplayDicitonary
-            Hecho por: Adrián Ugalde Chaves
+            Hecho por: AdriÃ¡n Ugalde Chaves
 
-            Descripción general:
+            DescripciÃ³n general: Clase del diccionario Splay, basada en la clase SplayTree realizada en clase
 
-            Modificación hecha por: Carmen Hidalgo Paz
+            ModificaciÃ³n hecha por: Carmen Hidalgo Paz
 
-            Descripción: Se agrega un método clear.
+            DescripciÃ³n: Se agrega un mÃ©todo clear.
 
 */
 
