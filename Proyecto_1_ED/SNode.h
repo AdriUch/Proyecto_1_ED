@@ -2,7 +2,9 @@
             Archivo: Clase SNode
             Hecha en clase
 
-            Descripción general: La clase del nodo del árbol Splay.
+            Descripción general: La clase del nodo del árbol Splay. Se crean nodos
+            que tienen punters a dos hijos y al padre. También se puede contar la
+            cantidad de hijos que tiene un nodo y se puede obtener un hijo.
 */
 
 #ifndef SNODE_H

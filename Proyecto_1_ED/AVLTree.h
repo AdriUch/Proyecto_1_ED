@@ -2,7 +2,11 @@
 			Archivo: Clase AVLTree
 			Hecha en clase
 
-			Descripción general: La clase del árbol AVL.
+			Descripción general: La clase del árbol AVL. El árbol AVL busca siempre
+			estar balanceado (para tener la menor altura posible) y por lo tanto tiene
+			varias funciones que se encargan de manejar esto (rotateRight, rotateLeft,
+			rebalanceRight y rebalanceLeft). Además tiene los métodos de insertar, borrar,
+			buscar, etc. elementos para poder utilizar el árbol.
 */
 
 #pragma once

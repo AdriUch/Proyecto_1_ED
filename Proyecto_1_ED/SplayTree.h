@@ -2,7 +2,12 @@
             Archivo: Clase SplayTree
             Hecha en clase
 
-            Descripción general: La clase del árbol Splay.
+            Descripción general: La clase del árbol Splay. La idea es que sea eficiente
+            cuando se realizan varias operaciones. Realiza una operación que sube el elemento
+            actual a la raíz y hace que los valores parecidos también estén cerca. Esta
+            operación ocurre después de una inserción, un borrado y una búsqueda. Las funciones
+            que se encargan de esto se encuentran en la parte privada y son rotateLeft,
+            rotateRight y splay.
 */
 
 #ifndef SPLAYTREE_H

@@ -2,7 +2,10 @@
 			Archivo: Clase UnsortedArrayDictionary
 			Hecha en clase
 
-			Descripción general: La clase del diccionario del UnsortedArray.
+			Descripción general: La clase del diccionario del UnsortedArray. Utiliza un arrayList
+			con elementos de tipo KVPair para almacenar los pares. No hay ningún tipo de orden
+			en el que se guardan los elementos. Se implementan los métodos para el manejo de los
+			elementos.
 
 			Modificación hecha por: Carmen Hidalgo Paz
 

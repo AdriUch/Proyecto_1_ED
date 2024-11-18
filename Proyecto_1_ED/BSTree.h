@@ -2,7 +2,10 @@
 			Archivo: Clase BSTree
 			Hecha en clase
 
-			Descripción general: La clase del árbol BST.
+			Descripción general: La clase del árbol de búsqueda binaria. Utiliza la recursión
+			para recorrer el árbol. Se puede observar la recursión en las funciones auxiliares
+			que se encuentran en la sección privada. Se pueden buscar, insertar y remover
+			elementos.
 */
 
 #pragma once

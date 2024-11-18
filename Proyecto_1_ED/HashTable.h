@@ -2,8 +2,17 @@
             Archivo: Clase HashTable
             Hecha en clase
 
-            Descripción general: La clase del Hash Table. Hereda
-            de la clase Dictionary.
+            Descripción general: La clase del Hash Table. El método que se utiliza para
+            la generación del código hash es polinomial. El método de compresión usado es
+            el de multiplicación, suma y división. Las colisiones se manejan con el método
+            de encadenamiento. Los factores de carga usados son de max=0.7 y min=0.3
+
+            Modificación hecha por: Carmen Hidalgo Paz
+
+            Descripción: Se cambiaron los factores de carga de max=0.6 y min=0.2 a
+            max = 0.7 y min=0.3 despúes de realizar varias pruebas. Asimismo, se le
+            agregó al clear el reseteo al número primo de buckets inicial y se volvieron
+            a crear los baldes.
 */
 
 #ifndef HASHTABLE_H
@@ -143,8 +152,8 @@ public:
         max = primes->getElement();
         buckets = new DLinkedList<KVPair<K, V>>[max];
         size = 0;
-        maxLoad = 0.6;
-        minLoad = 0.2;
+        maxLoad = 0.7;
+        minLoad = 0.3;
     }
     ~HashTable() {
         delete [] buckets;
@@ -185,6 +194,10 @@ public:
             buckets[i].clear();
         }
         size = 0;
+        primes->goToPos(4);
+        max = primes->getElement();
+        delete[] buckets;
+        buckets = new DLinkedList<KVPair<K, V>>[max]; // Redimensiona la tabla hash
     }
     List<K>* getKeys() {
         List<K> *keys = new DLinkedList<K>();

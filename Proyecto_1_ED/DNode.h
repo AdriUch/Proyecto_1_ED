@@ -2,8 +2,9 @@
 			Archivo: Clase DNode
 			Hecha en clase
 
-			Descripción general: La clase del nodo de la lista doblemente
-			enlazada.
+			Descripción general: La clase del nodo de la lista doblemente enlazada. Crea
+			un elemento que tiene dos punteros, uno al elemento anterior y otro para el siguiente
+			elemento. De esta manera es más fácil recorrer la lista.
 */
 
 #pragma once

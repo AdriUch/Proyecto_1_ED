@@ -2,7 +2,10 @@
 			Archivo: Clase BSTDictionary
 			Hecha en clase
 
-			Descripción general: La clase del diccionario del BSTree.
+			Descripción general: La clase del diccionario del BSTree. Trabaja con pares de
+			llave-valor de la clase KVPair. La clase ofrece métodos para insertar, eliminar,
+		    buscar y modificar elementos, así como para obtener todas las llaves y
+			valores almacenados.
 
 			Modificación hecha por: Carmen Hidalgo Paz
 

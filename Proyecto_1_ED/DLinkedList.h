@@ -2,8 +2,10 @@
 			Archivo: Clase DLinkedList
 			Hecha en clase
 
-			Descripción general: La clase de lista doblemente enlazada.
-			Hereda de la clase List.
+			Descripción general: La clase de lista doblemente enlazada. Tiene dos punteros,
+			uno apuntando al elemento anterior y el otro al siguiente. Ocupa la clase List y
+			a la clase del Nodo que contiene los dos punteros. Se implementan los métodos
+			para el manejo de los elementos dentro de la lista.
 */
 
 #pragma once

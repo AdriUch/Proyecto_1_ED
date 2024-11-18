@@ -2,7 +2,9 @@
 			Archivo: Clase BSTNode
 			Hecha en clase
 
-			Descripción general: La clase del nodo del BSTree.
+			Descripción general: La clase del nodo del BSTree. Se crean nodos
+			que tienen punteros para dos hijos. Además, en esta clase se calcula
+			si el nodo es una hoja y cuántos hijos tiene.
 */
 
 #pragma once

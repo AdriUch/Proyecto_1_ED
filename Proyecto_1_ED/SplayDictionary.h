@@ -2,7 +2,8 @@
             Archivo: Clase SplayDicitonary
             Hecho por: Adrián Ugalde Chaves
 
-            Descripción general: Clase del diccionario Splay, basada en la clase SplayTree realizada en clase
+            Descripción general: Clase del diccionario Splay, basada en la clase SplayTree
+            realizada en clase
 
             Modificación hecha por: Carmen Hidalgo Paz
 
