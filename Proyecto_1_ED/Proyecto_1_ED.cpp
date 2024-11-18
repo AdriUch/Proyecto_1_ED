@@ -364,38 +364,60 @@ void tiempoBorrados(Dictionary<int, int>* numeros, std::string nomDictionary) {
     }
 }
 // - - - OPERACIONES MEZCLADAS
-void tiempoMezcladas(Dictionary<int, int>* numeros, string nomDictionary) {
+void tiempoMezcladas(Dictionary<int, int>* numeros, std::string nomDictionary) {
     const int repeticiones = 10000;
-    // Guardar tiempos
     double tiempoAleatorio[repeticiones];
     double tiempoAscendente[repeticiones];
     double tiempoSimilares[repeticiones];
+
     std::vector<int> keyVector;
-    numeros->clear();
+
     // Aleatorio
+    numeros->clear();
     for (int i = 0; i < repeticiones; ++i) {
         int operacion = rand() % 3;
         tiempoAleatorio[i] = measureTimeMezcladas(numeros, operacion);
     }
     numeros->clear();
-    cout << endl << "Prueba 1 terminada" << endl;
+    cout << endl << "Prueba 1 (Aleatorio) terminada" << endl;
+
     // Ascendente
-    std::sort(keyVector.begin(), keyVector.end()); // Orden ascendente
+    numeros->clear();
+    insertAscendingValues(numeros);
+    List<int>* llavesAsc = numeros->getKeys();
+    llavesAsc->goToStart();
+    while (!llavesAsc->atEnd()) {
+        keyVector.push_back(llavesAsc->getElement());
+        llavesAsc->next();
+    }
+    delete llavesAsc;
+
     for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
         int operacion = rand() % 3;
         tiempoAscendente[i] = measureTimeMezcladas(numeros, operacion);
     }
     numeros->clear();
-    cout << endl << "Prueba 2 terminada" << endl;
-    // Llaves similares
+    cout << endl << "Prueba 2 (Ascendente) terminada" << endl;
+
+    // Llaves Similares
+    numeros->clear();
+    insertSimilarValues(numeros);
+    List<int>* llavesSim = numeros->getKeys();
+    llavesSim->goToStart();
+    while (!llavesSim->atEnd()) {
+        keyVector.push_back(llavesSim->getElement());
+        llavesSim->next();
+    }
+    delete llavesSim;
+
     for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
         int operacion = rand() % 3;
         tiempoSimilares[i] = measureTimeMezcladas(numeros, operacion);
     }
     numeros->clear();
-    cout << endl << "Prueba 3 terminada" << endl;
+    cout << endl << "Prueba 3 (Llaves Similares) terminada" << endl;
 
-    // Se escribe en un .csv
+    // Escribir resultados a archivo .csv
     std::ofstream file(nomDictionary + "_tiempo_Mixta.csv");
     if (file.is_open()) {
         file << "Iteracion,Orden Aleatorio (ms),Orden Ascendente (ms),Llaves Similares (ms)\n";
@@ -406,10 +428,10 @@ void tiempoMezcladas(Dictionary<int, int>* numeros, string nomDictionary) {
                 << tiempoSimilares[i] << "\n";
         }
         file.close();
-        cout << endl << "Tiempos de borrado guardados en el archivo " + nomDictionary + "_tiempo_Mixta.csv" << endl;
+        cout << endl << "Tiempos de operaciones mezcladas guardados en " + nomDictionary + "_tiempo_Mixta.csv" << endl;
     }
     else {
-        std::cerr << "Error al abrir el archivo para guardar tiempos de mixtas" << endl;
+        std::cerr << "Error al abrir el archivo para guardar tiempos de operaciones mezcladas" << endl;
     }
 }
 // - - - - - FINAL DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
