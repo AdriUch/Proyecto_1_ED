@@ -86,7 +86,6 @@ private:
 
     // redimensiona la tabla al tamaño indicado
     void reHash(int newMax) {
-        cout << "Rehashing, new size: " << newMax << endl;
         int oldMax = max;
         max = newMax;
         DLinkedList<KVPair<K, V>> *newBuckets = new DLinkedList<KVPair<K, V>>[max];
@@ -152,8 +151,8 @@ public:
         max = primes->getElement();
         buckets = new DLinkedList<KVPair<K, V>>[max];
         size = 0;
-        maxLoad = 0.7;
-        minLoad = 0.3;
+        maxLoad = 0.8;
+        minLoad = 0.25;
     }
     ~HashTable() {
         delete [] buckets;
