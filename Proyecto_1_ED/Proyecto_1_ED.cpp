@@ -141,44 +141,31 @@ double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
 
     int randomKey = rand() % 10500; // Generar una llave aleatoria
 
-    try {
+    QueryPerformanceCounter(&start);  // Inicio del tiempo, incluso si hay error
 
+    try {
         if (operacion == 0) { // Inserción
             if (!numeros->contains(randomKey)) {
-                QueryPerformanceCounter(&start);
                 numeros->insert(randomKey, randomKey);
-                QueryPerformanceCounter(&end);
             }
         }
         else if (operacion == 1) { // Búsqueda
-            if (numeros->getSize()==0) {  // Verificar si el diccionario tiene elementos
-                QueryPerformanceCounter(&start);
-                numeros->contains(randomKey);
-                QueryPerformanceCounter(&end);
-            }
-            else {
-                return 0.0; // Saltar si no hay elementos
-            }
+            numeros->contains(randomKey);
         }
         else if (operacion == 2) { // Borrado
-            if (numeros->getSize()==0) {  // Verificar si el diccionario tiene elementos
-                QueryPerformanceCounter(&start);
-                numeros->remove(randomKey);
-                QueryPerformanceCounter(&end);
-            }
-            else {
-                return 0.0; // Saltar si no hay elementos
-            }
+            numeros->remove(randomKey);
         }
     }
     catch (const std::runtime_error& e) {
-        // Ignorar errores de borrado cuando la clave no existe
-        QueryPerformanceCounter(&end);
-        return 0.0;
+        // Excepción capturada, pero se continúa registrando el tiempo
     }
+
+    QueryPerformanceCounter(&end);  // Fin del tiempo
 
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
+
+
 // - - - - - FIN MEDICIONES DE TIEMPOS
 
 // - - - - - INICIO DE APUNTE DE TIEMPOS EN ARCHIVOS .CSV
@@ -453,57 +440,57 @@ int main() {
     Dictionary<int, int>* numerosSplay = new SplayDictionary<int, int>();
 
     srand(time(0));
-    // Pruebas de inserciones
-    cout << endl << "Pruebas de Insercion:" << endl;
-    /*cout << endl << "1. unsorted" << endl;
-    tiempoInserciones(numerosUnsorted, "Unsorted");*/
-    cout << endl << "2. hash" << endl;
-    tiempoInserciones(numerosHash, "Hash");
-    /*cout << endl << "3. bst" << endl;
-    tiempoInserciones(numerosBST, "BST");
-    cout << endl << "4. avl" << endl;
-    tiempoInserciones(numerosAVL, "AVL");
-    cout << endl << "5. splay" << endl;
-    tiempoInserciones(numerosSplay, "Splay");*/
+   // //Pruebas de inserciones
+   // cout << endl << "Pruebas de Insercion:" << endl;
+   // cout << endl << "1. unsorted" << endl;
+   // tiempoInserciones(numerosUnsorted, "Unsorted");
+   // cout << endl << "2. hash" << endl;
+   // tiempoInserciones(numerosHash, "Hash");
+   // cout << endl << "3. bst" << endl;
+   // tiempoInserciones(numerosBST, "BST");
+   // cout << endl << "4. avl" << endl;
+   // tiempoInserciones(numerosAVL, "AVL");
+   // cout << endl << "5. splay" << endl;
+   // tiempoInserciones(numerosSplay, "Splay");
 
-    //Pruebas de búsquedas
-    cout << endl << "Pruebas de Busqueda:" << endl;
-    /*cout << endl << "1. unsorted" << endl;
-    tiempoBusquedas(numerosUnsorted, "Unsorted");*/
-    cout << endl << "2. hash" << endl;
-    tiempoBusquedas(numerosHash, "Hash");
-    /*cout << endl << "3. bst" << endl;
-    tiempoBusquedas(numerosBST, "BST");
-    cout << endl << "4. avl" << endl;
-    tiempoBusquedas(numerosAVL, "AVL");
-    cout << endl << "5. splay" << endl;
-    tiempoBusquedas(numerosSplay, "Splay");*/
+   // //Pruebas de búsquedas
+   // cout << endl << "Pruebas de Busqueda:" << endl;
+   // cout << endl << "1. unsorted" << endl;
+   // tiempoBusquedas(numerosUnsorted, "Unsorted");
+   // cout << endl << "2. hash" << endl;
+   // tiempoBusquedas(numerosHash, "Hash");
+   // cout << endl << "3. bst" << endl;
+   // tiempoBusquedas(numerosBST, "BST");
+   // cout << endl << "4. avl" << endl;
+   // tiempoBusquedas(numerosAVL, "AVL");
+   // cout << endl << "5. splay" << endl;
+   // tiempoBusquedas(numerosSplay, "Splay");
 
-    // Pruebas de borrados
-    cout << endl << "Pruebas de Borrado:" << endl;
-    /*cout << endl << "1. unsorted" << endl;
-    tiempoBorrados(numerosUnsorted, "Unsorted");*/
-    cout << endl << "2. hash" << endl;
-    tiempoBorrados(numerosHash, "Hash");
-    /*cout << endl << "3. bst" << endl;
-    tiempoBorrados(numerosBST, "BST");
-    cout << endl << "4. avl" << endl;
-    tiempoBorrados(numerosAVL, "AVL");
-    cout << endl << "5. splay" << endl;
-    tiempoBorrados(numerosSplay, "Splay");*/
+   // // Pruebas de borrados
+   // cout << endl << "Pruebas de Borrado:" << endl;
+   // cout << endl << "1. unsorted" << endl;
+   // tiempoBorrados(numerosUnsorted, "Unsorted");
+   // cout << endl << "2. hash" << endl;
+   // tiempoBorrados(numerosHash, "Hash");
+   // cout << endl << "3. bst" << endl;
+   // tiempoBorrados(numerosBST, "BST");
+   // cout << endl << "4. avl" << endl;
+   // tiempoBorrados(numerosAVL, "AVL");
+   // cout << endl << "5. splay" << endl;
+   // tiempoBorrados(numerosSplay, "Splay");
 
-    //Pruebas operacionez mezcladas
-    cout << endl << "Pruebas Mixtas:" << endl;
-    /*cout << endl << "1. unsorted" << endl;
-    tiempoMezcladas(numerosUnsorted, "Unsorted");*/
-    cout << endl << "2. hash" << endl;
-    tiempoMezcladas(numerosHash, "Hash");
-    /*cout << endl << "3. bst" << endl;
-    tiempoMezcladas(numerosBST, "BST");
-    cout << endl << "4. avl" << endl;
-    tiempoMezcladas(numerosAVL, "AVL");
-    cout << endl << "5. splay" << endl;
-    tiempoMezcladas(numerosSplay, "Splay");*/
+   // //Pruebas operacionez mezcladas
+   // cout << endl << "Pruebas Mixtas:" << endl;
+   // cout << endl << "1. unsorted" << endl;
+   // tiempoMezcladas(numerosUnsorted, "Unsorted");
+   // cout << endl << "2. hash" << endl;
+   // tiempoMezcladas(numerosHash, "Hash");
+   // cout << endl << "3. bst" << endl;
+   tiempoMezcladas(numerosBST, "BST");
+   // cout << endl << "4. avl" << endl;
+   // tiempoMezcladas(numerosAVL, "AVL");
+   // cout << endl << "5. splay" << endl;
+   // tiempoMezcladas(numerosSplay, "Splay");
 
     delete numerosUnsorted;
     delete numerosHash;
