@@ -3,7 +3,7 @@
             Hecho por: Carmen Hidalgo Paz, Britany Romero Hernández y Adrián Ugalde Chaves
             Fecha de Entrega: 14 de noviembre del 2024
             Clase: Estructuras de Datos
-
+ 
             Descripción General: En esta sección se manejan los métodos
             de inserción, borrado y búsqueda para todos los diccionarios.
             Además se tiene el método para tomar el tiempo de cada acción
