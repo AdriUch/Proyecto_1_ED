@@ -135,25 +135,23 @@ double measureTimeBorrado(Dictionary<int, int>* numeros, int key) {
     return static_cast<double>((end.QuadPart - start.QuadPart) * 1000.0) / frequency.QuadPart;
 }
 // - - - OPERACIONES MEZCLADAS
-double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion) {
+double measureTimeMezcladas(Dictionary<int, int>* numeros, int operacion, int num) {
     LARGE_INTEGER frequency, start, end;
     QueryPerformanceFrequency(&frequency);
-
-    int randomKey = rand() % 10500; // Generar una llave aleatoria
 
     QueryPerformanceCounter(&start);  // Inicio del tiempo, incluso si hay error
 
     try {
         if (operacion == 0) { // Inserción
-            if (!numeros->contains(randomKey)) {
-                numeros->insert(randomKey, randomKey);
+            if (!numeros->contains(num)) {
+                numeros->insert(num, num);
             }
         }
         else if (operacion == 1) { // Búsqueda
-            numeros->contains(randomKey);
+            numeros->contains(num);
         }
         else if (operacion == 2) { // Borrado
-            numeros->remove(randomKey);
+            numeros->remove(num);
         }
     }
     catch (const std::runtime_error& e) {
@@ -371,7 +369,8 @@ void tiempoMezcladas(Dictionary<int, int>* numeros, std::string nomDictionary) {
     numeros->clear();
     for (int i = 0; i < repeticiones; ++i) {
         int operacion = rand() % 3;
-        tiempoAleatorio[i] = measureTimeMezcladas(numeros, operacion);
+        int randomKey = rand() % 10500; // Generar una llave aleatoria
+        tiempoAleatorio[i] = measureTimeMezcladas(numeros, operacion, randomKey);
     }
     numeros->clear();
     cout << endl << "Prueba 1 (Aleatorio) terminada" << endl;
@@ -385,12 +384,14 @@ void tiempoMezcladas(Dictionary<int, int>* numeros, std::string nomDictionary) {
         keyVector.push_back(llavesAsc->getElement());
         llavesAsc->next();
     }
-    delete llavesAsc;
     numeros->clear();
+    llavesAsc->goToStart();
     for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
         int operacion = rand() % 3;
-        tiempoAscendente[i] = measureTimeMezcladas(numeros, operacion);
+        tiempoAscendente[i] = measureTimeMezcladas(numeros, operacion, llavesAsc->getElement());
+        llavesAsc->next();
     }
+    delete llavesAsc;
     numeros->clear();
     cout << endl << "Prueba 2 (Ascendente) terminada" << endl;
 
@@ -403,12 +404,14 @@ void tiempoMezcladas(Dictionary<int, int>* numeros, std::string nomDictionary) {
         keyVector.push_back(llavesSim->getElement());
         llavesSim->next();
     }
-    delete llavesSim;
     numeros->clear();
+    llavesSim->goToStart();
     for (int i = 0; i < repeticiones && i < keyVector.size(); ++i) {
         int operacion = rand() % 3;
-        tiempoSimilares[i] = measureTimeMezcladas(numeros, operacion);
+        tiempoSimilares[i] = measureTimeMezcladas(numeros, operacion, llavesSim->getElement());
+        llavesSim->next();
     }
+    delete llavesSim;
     numeros->clear();
     cout << endl << "Prueba 3 (Llaves Similares) terminada" << endl;
 
